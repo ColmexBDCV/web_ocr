@@ -16,19 +16,21 @@ def upload_file():
 
 @app.route("/upload", methods=['POST'])
 def uploader():
- if request.method == 'POST':
-  # obtenemos el archivo del input "archivo"
-  lang = request.values.get("lang")
-  compress = request.values.get("compress")  
-  f = request.files['archivo']
-  filename = secure_filename(f.filename)
-  # Guardamos el archivo en el directorio "Archivos PDF"
-  f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-  # Retornamos una respuesta satisfactoria
-  ocrmypdf.ocr('./files/'+filename, './files/'+'ocr_'+filename, deskew=True, force_ocr=True, language=lang, optimize=compress, jbig2_lossy=True, output_type="pdf")
-  os.remove('./files/'+filename)
-  return redirect("/?file=ocr_"+filename)
-  # return redirect("download/ocr_"+filename)
+  if not os.path.exists('./files'):
+    os.makedirs('./files')
+  if request.method == 'POST':
+    # obtenemos el archivo del input "archivo"
+    lang = request.values.get("lang")
+    compress = request.values.get("compress")  
+    f = request.files['archivo']
+    filename = secure_filename(f.filename)
+    # Guardamos el archivo en el directorio "Archivos PDF"
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    # Retornamos una respuesta satisfactoria
+    ocrmypdf.ocr('./files/'+filename, './files/'+'ocr_'+filename, deskew=True, force_ocr=True, language=lang, optimize=compress, jbig2_lossy=True, output_type="pdf")
+    os.remove('./files/'+filename)
+    return redirect("/?file=ocr_"+filename)
+    # return redirect("download/ocr_"+filename)
 
 @app.route("/check/<string:filename>")
 def check_file(filename):
