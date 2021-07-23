@@ -2,26 +2,40 @@ $(document).ready(function() {
 
     if (getUrlParameter("file") != undefined){
 
-        $("#download").attr("href", "download/"+getUrlParameter("file")).text("Descargar "+getUrlParameter("file"))
+        $("#pdf").attr("href", "download/"+getUrlParameter("file")+".pdf").text("Descargar "+getUrlParameter("file")+".pdf")
+        $("#txt").attr("href", "download/"+getUrlParameter("file")+".txt").text("Descargar "+getUrlParameter("file")+".txt")
+
 
         $.ajax({
-            url:'check/'+getUrlParameter("file"),
+            url:'check/'+getUrlParameter("file")+".pdf",
             type:'HEAD',
             error: function()
             {
-               $("#download").hide()
+                $("#pdf").hide()
             },
             success: function()
             {
-                $("#download").show()
+                
+                $("#pdf").show()
+                
             }
-        });    
+        });   
+        
+        $.ajax({
+            url:'check/'+getUrlParameter("file")+".txt",
+            type:'HEAD',
+            error: function()
+            {
+              
+               $("#txt").hide()
+            },
+            success: function()
+            {
+                $("#txt").show()
+            }
+        });
     }
-
-    $("#download").click(function (){ 
-        $("#download").hide()
-    })
-
+    
     $("#my_form").submit(function(e) {
         alert("El proceso puede tardar varios minutos, por favor sea paciente")
         $("#load_logo").addClass("se-pre-con");

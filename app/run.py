@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template, request, send_file, redirect, after_this_request, send_from_directory
 from werkzeug import secure_filename
 import ocrmypdf
+import time
 
 # instancia del objeto Flask
 app = Flask(__name__)
@@ -27,9 +28,10 @@ def uploader():
     # Guardamos el archivo en el directorio "Archivos PDF"
     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     # Retornamos una respuesta satisfactoria
-    ocrmypdf.ocr('./files/'+filename, './files/'+'ocr_'+filename, deskew=True, force_ocr=True, language=lang, optimize=compress, jbig2_lossy=True, output_type="pdf")
+    filename_txt = "./files/ocr_"+filename.replace(".pdf",".txt")
+    ocrmypdf.ocr('./files/'+filename, './files/'+'ocr_'+filename, deskew=True, force_ocr=True, language=lang, optimize=compress, jbig2_lossy=True, output_type="pdf", sidecar=filename_txt)
     os.remove('./files/'+filename)
-    return redirect("/?file=ocr_"+filename)
+    return redirect("/?file=ocr_"+filename.replace(".pdf",""))
     # return redirect("download/ocr_"+filename)
 
 @app.route("/check/<string:filename>")
