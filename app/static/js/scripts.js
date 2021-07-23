@@ -27,6 +27,11 @@ $(document).ready(function() {
         $("#load_logo").addClass("se-pre-con");
     });
 
+    $("#fileupload").change( function () {
+        $("#labelupload").text($("#fileupload")[0].files[0].name)
+    });
+        
+
 });
 
 var getUrlParameter = function getUrlParameter(sParam) {
