@@ -4,15 +4,15 @@
 
 {% block content %}
 
-    <h1>
-        Servicio OCR - BDCV
-    </h1>
-
+    <p>
+        Convierta un archivo PDF de imagenes en un PDF con texto buscable  recuperable.
+    </p>
     <form id="my_form" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="form-group row ">
             <div class="col-12">
                 <div class="files">
                     <label id="labelupload">Para iniciar, arrastre aqui su archivo o simplemente de click</label>
+                    <!-- <input required id="fileupload" type="file" name="archivo" class="form-control" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"> -->
                     <input required id="fileupload" type="file" name="archivo" class="form-control" accept="application/pdf">
                 </div>
             </div>
@@ -39,8 +39,8 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="offset-4 col-8">
-                <button id="submit" name="submit" type="submit" class="btn btn-primary">Subir PDF</button>
+            <div class="col-12">
+                <button id="submit" name="submit" type="submit" class="btn btn-block btn-secondary">INICIAR</button>
             </div>
         </div>
     </form>
